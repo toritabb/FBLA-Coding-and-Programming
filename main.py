@@ -277,26 +277,38 @@ def display_add_partner_window(partners_chart):
 
     # Validate the input and then add partner
     def submit_partner(name: str, address: str, phone: str, email: str, contact: str, industry: str):
+        def remove_chars(string, *chars):
+            for char in chars:
+                string = string.replace(char, "")
+            return string
+
+        raw_phone = remove_chars(phone, "-", " ", "+", "(", ")")
         requirements = [
-            address.split(' ')[0].isdigit(),
-            '-' in phone,
-            all(part.isdigit() for part in phone.split('-')),
+            address.split(" ")[0].isdigit(),
+            raw_phone.isdigit(),
+            len(raw_phone) in (7, 10, 11),
+            "@" in email,
+            "." in email,
+            remove_chars(contact, " ").isalpha(),
+            remove_chars(industry, " ").isalpha()
         ]
+
+        # If all of the validation requirements are met, add the partner
         if all(requirements):
-            pass
+            # Create new partner dictionary
+            new_partner = {"Number": str(len(partners) + 1), "Name": name, "Address": address, "Phone": phone, "Email": email, "Contact": contact, "Industry": industry}
 
-        # Create new partner dictionary
-        new_partner = {"Number": str(len(partners) + 1), "Name": name, "Address": address, "Phone": phone, "Email": email, "Contact": contact, "Industry": industry}
+            # Add new partner to partners list
+            partners.append(new_partner)
+            
+            # Update partner list
+            partners_chart.event_generate("<<Update>>")
 
-        # Add new partner to partners list
-        partners.append(new_partner)
-        
-        # Update partner list
-        partners_chart.event_generate("<<Update>>")
-
-        # Save partners to CSV and close page
-        save_partners()
-        add_partner_window.destroy()
+            # Save partners to CSV and close page
+            save_partners()
+            add_partner_window.destroy()
+        else:
+            print(requirements)
 
     # Add the Submit Button
     submit_button = tk.Button(add_partner_window, text="Add Partner", command=lambda: submit_partner(name_entry.get(), address_entry.get(), phone_entry.get(), email_entry.get(), contact_entry.get(), industry_entry.get()))
