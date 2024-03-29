@@ -16,7 +16,7 @@ Documentation - describes the modules we used to create our program and the copy
 
 Dependencies:
 Requires Python 3.12 installed on your system.
-Install the pillow library using 'pip install pillow'
+Install the pillow and requests libraries using 'pip install pillow requests'
 
 
 Program designed in Python 3.12 for FBLA Colorado by Alexander Fiduccia and Joe Hopkins.
