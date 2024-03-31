@@ -142,10 +142,11 @@ def display_existing_partners_window() -> None:
     partners_chart.event_generate("<<Update>>")
  
     # Add the Back Button
-    back_button = tk.Button(existing_partners_window, text="Back", command=lambda: close_window(existing_partners_window), background=button_color)
+    back_button = tk.Button(existing_partners_window, text="Back", command=lambda: close_window(existing_partners_window), background=text_box_color)
     back_button.place(x=20, y=366)
 
-    add_partner_button = tk.Button(existing_partners_window, text="Add Partner", command=lambda: display_add_partner_window(existing_partners_window, partners_chart), background=button_color)
+    # Add the Add Partner Button (functionality is marked later)
+    add_partner_button = tk.Button(existing_partners_window, text="Add Partner", command=lambda: display_add_partner_window(existing_partners_window, partners_chart), background=text_box_color)
     add_partner_button.place(x=173, y=366)
 
     # Export Button
@@ -168,7 +169,7 @@ def display_existing_partners_window() -> None:
                 writer.writerow([partner[field] for field in fieldnames])
 
     # GUI Export Button
-    export_button = tk.Button(existing_partners_window, text="Export Chart", command=export_to_csv, background=button_color)
+    export_button = tk.Button(existing_partners_window, text="Export Chart", command=export_to_csv, background=text_box_color)
     export_button.place(x=76, y=366)
 
     # Deletes the selected partners
@@ -201,7 +202,7 @@ def display_existing_partners_window() -> None:
             confirm_button.place(x=208.7, y=76)
 
     # Delete Partner Button
-    delete_button = tk.Button(existing_partners_window, text="Delete Selected Partners", command=delete_partners, background=button_color)
+    delete_button = tk.Button(existing_partners_window, text="Delete Selected Partners", command=delete_partners, background=text_box_color)
     delete_button.place(x=267, y=366)
 
     # Add search field customization
@@ -210,7 +211,7 @@ def display_existing_partners_window() -> None:
 
     search_by = tk.StringVar(value="Name")
     search_by_dropdown = tk.OptionMenu(existing_partners_window, search_by, *fieldnames[1:], command=lambda _: filter_partners())
-    search_by_dropdown.config(pady=1, width=7)
+    search_by_dropdown.config(pady=1, width=7, bg=text_box_color)
     search_by_dropdown.place(x=653, y=366)
 
     # Add a Search Bar
@@ -356,6 +357,12 @@ def display_add_partner_window(parent_window: tk.Toplevel, partners_chart: ttk.T
             # Save partners to CSV and close page
             save_partners()
             add_partner_window.destroy()
+        else:
+        #Issue pop up box
+            label = tk.Label(add_partner_window, text="One or more entered fields are not correct\nFor syntax rules hover over a field label", background=text_box_color)
+            label.place(x=13,y=335)
+            label.pack
+            root.after(5000, label.destroy)
 
     # Add the Submit Button
     submit_button = tk.Button(add_partner_window, text="Add Partner", command=lambda: submit_partner(name_entry.get(), address_entry.get(), phone_entry.get(), email_entry.get(), contact_entry.get(), industry_entry.get()), background=button_color)
