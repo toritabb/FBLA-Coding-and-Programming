@@ -26,15 +26,15 @@ give you options on where to save the file on your home computer as a CSV file.
 
 Question: Where are my Backups stored?
 Answer: Backups are stored in the same directory as the program is stored in, this is in order to allow you the most control and security over your data.
-There will be a file name "" which is where the program sources its data from, and a file named "-Backup-2024/03/26" which is the most recent backup as of the date on the filename.
+There will be a file name "partners.csv" which is where the program sources its data from, and a file named "-Backup-2024/03/26" which is the most recent backup as of the date on the filename.
 
-Question:
-Answer:
+Question: Where can I find more information on this project?
+Answer: The benefits of open source software are immense, our software is fully open source and you can watch our development progress on GitHub at
+https://github.com/toritabb/FBLA-Coding-and-Programming/blob/main/README.md
 
-Question:
-Answer:
+Question: I have another question where can I find the answer?
+Answer: There is a Question Mark button "?" to the right of the ReadMe button which is a direct message question to the creators of this software,
+any questions you may have can be and will be answered promptly.
 
-Question:
-Answer:
 
 Program designed in Python 3.12 for FBLA Colorado by Alexander Fiduccia and Joe Hopkins.
