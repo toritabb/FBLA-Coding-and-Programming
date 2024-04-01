@@ -42,6 +42,11 @@ CSV
 CSV is a simple file format used to store data, such as a spreadsheet or a database.
 We incorporated the CSV library to allow users to export partner information to a file for backup and ease of use.
 
+SMTP
+SMTP is a simple mail service and is used for user questions through the app
+
+
+
 All images are used under public domain or are original creations.
 """
 
