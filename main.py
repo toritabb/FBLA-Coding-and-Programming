@@ -6,10 +6,19 @@ import csv
 import smtplib
 import datetime
 import os
+import shutil
 
 open("partners.csv", "a").close() if not os.path.exists("partners.csv") else None
 program_directory = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(program_directory, "partners.csv")
+
+
+backup_folder = os.path.join(program_directory, "Partner Backups")
+os.makedirs(backup_folder, exist_ok=True)
+backup_date = datetime.datetime.now().strftime("%Y-%m-%d")
+backup_file_name = f"partners-COPY-{backup_date}.csv"
+backup_file_path = os.path.join(backup_folder, backup_file_name)
+shutil.copy(file_path, backup_file_path)
 
 # Text for ReadMe
 program_info = ""
@@ -454,7 +463,7 @@ def send_question(question):
         server.sendmail(sender_email, receiver_email, message)
 
 def open_qna_page(): 
-    # Create a new window for the Q&A page
+    #New Window for Questions
     qna_window = tk.Toplevel(root)
     qna_window.title("Help Request")
     qna_window.configure(background=bg_color)
@@ -490,7 +499,7 @@ def open_qna_page():
     back_button.place(x=233, y=275)
 
 help_button = tk.Button(root, text="?", command=open_qna_page, background=button_color, font='Helvetica 9 bold')
-help_button.place(x=90, y=140)  # Adjust position as needed
+help_button.place(x=90, y=140)
 
 # Start the GUI event loop
 root.mainloop()
