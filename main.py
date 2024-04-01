@@ -3,6 +3,13 @@ from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import csv
+import smtplib
+import datetime
+import os
+
+open("partners.csv", "a").close() if not os.path.exists("partners.csv") else None
+program_directory = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(program_directory, "partners.csv")
 
 # Text for ReadMe
 program_info = ""
@@ -226,7 +233,7 @@ def display_existing_partners_window() -> None:
 
 # Format the information for the CSV file
 def save_partners() -> None:
-    with open("partners.csv", "w", newline="") as csvfile:  # Open in write mode
+    with open(file_path, "w", newline="") as csvfile:  # Open in write mode
         fieldnames = ["Number", "Name", "Address", "Phone", "Email", "Contact", "Industry"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -427,6 +434,63 @@ documentation_button.place(x=20, y=232)
 # Add credits
 credits_label = tk.Label(root, text="Program Designed in Python 3.12 for FBLA by Alexander Fiduccia and Joe Hopkins", font=("Arial", 7), background=bg_color)
 credits_label.place(x=48.5, y=278)
+
+#################
+#   Q&A Page    #
+#################
+
+def send_question(question):
+    unique_id = datetime.datetime.now().strftime("%Y/%m/%d-%H:%M:%S-%f")
+
+    # Email Credentials
+    sender_email = "tkmouse9@gmail.com"
+    sender_password = "xfrk qutz depl admq"
+    receiver_email = "fiducciaalexander@gmail.com"
+    message = f"Subject: Help Request #{unique_id}\n\nQuestion from User: {question}"
+
+    # Connect to SMTP server
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, receiver_email, message)
+
+def open_qna_page(): 
+    # Create a new window for the Q&A page
+    qna_window = tk.Toplevel(root)
+    qna_window.title("Help Request")
+    qna_window.configure(background=bg_color)
+    center_window(qna_window, 500, 375)
+    qna_window.resizable(False, False)
+
+
+ # Question entry box and submit button
+    question_label = tk.Label(qna_window, text="Send a Question or Suggestion to Our Developers\nInclude your email at the top of the message so we can get back to you", padx=100, pady=50, background=bg_color, font='Helvetica 10 bold')
+    question_label.pack()
+
+    question_box = tk.Text(qna_window, width=50, height=5, background=button_color)
+    question_box.pack()
+
+    def submit_question():
+        question_text = question_box.get("1.0", "end").strip()
+        if question_text:  # Check if question box is empty
+            send_question(question_text)
+            question_box.delete("1.0", tk.END)  # Clear question box after submission
+            success_label = tk.Label(qna_window, text="Question submitted successfully!", fg="green", background=button_color, font ='Helvetica 10 bold')
+            success_label.pack(pady=30)
+            root.after(5000, success_label.destroy)
+        else:
+            error_label = tk.Label(qna_window, text="Please enter your question.", fg="red", background=button_color, font='Helvetica 10 bold')
+            error_label.pack(pady=30)
+            root.after(5000, error_label.destroy)
+
+    submit_button = tk.Button(qna_window, text="Submit Question", command=submit_question, background=button_color)
+    submit_button.pack(pady=20)
+
+    # Add the Back Button
+    back_button = tk.Button(qna_window, text="Back", command=qna_window.destroy, background=button_color)
+    back_button.place(x=233, y=275)
+
+help_button = tk.Button(root, text="?", command=open_qna_page, background=button_color, font='Helvetica 9 bold')
+help_button.place(x=90, y=140)  # Adjust position as needed
 
 # Start the GUI event loop
 root.mainloop()

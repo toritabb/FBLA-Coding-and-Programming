@@ -1,5 +1,6 @@
 import os
 
 open(os.path.join(os.path.expanduser("~"), "partners.csv"), "a").close() if not os.path.exists(os.path.join(os.path.expanduser("~"), "partners.csv")) else open("partners.csv", "a").close()
+open("partners.csv", "a").close() if not os.path.exists("partners.csv") else None
 
 file path = os.path.join(os.path.expanduser("~"), "partners.csv")
