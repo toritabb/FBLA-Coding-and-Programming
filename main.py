@@ -398,9 +398,9 @@ def send_question(question):
     unique_id = datetime.datetime.now().strftime("%Y/%m/%d-%H:%M:%S-%f")
 
     # Email Credentials
-    sender_email = "tkmouse9@gmail.com"
-    sender_password = "xfrk qutz depl admq"
-    receiver_email = "fiducciaalexander@gmail.com"
+    sender_email = "<sender email>"
+    sender_password = "<Google Code Password>"
+    receiver_email = "<receiver email>"
     message = f"Subject: Help Request #{unique_id}\n\nQuestion from User: {question}"
 
     # Connect to SMTP server
